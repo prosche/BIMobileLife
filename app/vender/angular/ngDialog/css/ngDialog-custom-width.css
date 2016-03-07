@@ -1,0 +1,37 @@
+.ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
+    width: 90%;
+    height: 8rem;
+    background: #F5F5F7;
+    border-radius: .5rem;
+    position: relative;
+}
+.ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content .popLayer .PopBox .innerContent
+{
+    position: relative;
+    width:90%;
+    /*height: 70px;*/
+    height:100%;
+    margin:0 auto;
+    top:25px;
+    font-size: 0.85rem;
+    font-weight: normal;
+    color:#000000;
+    overflow-y: auto;
+}
+.ngdialog.ngdialog-theme-plain.custom-loading-width .ngdialog-content {
+    width: 0;
+    height:0;
+}
+.ngdialog.ngdialog-theme-plain.custom-loading-width .ngdialog-close {
+    width: 0;
+    height:0;
+    display:none;
+    overflow:hidden;
+}
+.ngdialog.ngdialog-theme-plain.custom-loading-width .ngdialog-content {
+    background: white;
+    -webkit-backface-visibility: hidden;
+    -webkit-animation: ngdialog-fadein 0;
+    animation: ngdialog-fadein 0;
+    font-size: 0;
+}

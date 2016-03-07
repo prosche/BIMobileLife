@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link href="../../vender/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script type="text/javascript" src="../../vender/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../vender/bootstrap/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+<input id="btntext" type="button" value="添加文本组件" data-toggle="modal" data-target="#myModal"  href="test.html"/>
+<!-- Modal -->
+<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+        <h3 id="myModalLabel">Modal header</h3>
+    </div>
+    <div class="modal-body"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $('#myModal').modal('show');
+</script>

@@ -1,0 +1,33 @@
+<html>
+<head ng-app="exampleApp">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>表单验证</title>
+    <!--
+    <link href="lib/bootstrap-gh-pages/assets/bootstrap.css" rel="stylesheet" type="text/css" />
+    -->
+    <!--<link rel="stylesheet" href="vender/bootstrap/css/bootstrap.min.css">-->
+    <style>
+        #css_form input.ng-invalid.ng-dirty {
+            background-color: #FFC0CB;
+        }
+        #css_form input.ng-valid.ng-dirty {
+            background-color: #78FA89;
+        }
+    </style>
+</head>
+<body ng-controller="MainCtrl">
+    <button ng-click="clickToOpen()">click me!</button>
+<script type="text/javascript" src="../../vender/angular/angular.min.js"></script>
+
+<!--<script type='text/javascript' src='../../vender/bootstrap/js/bootstrap.min.js'></script>-->
+<script type='text/javascript' >
+    var app = angular.module('exampleApp', ['ngDialog']);
+
+    app.controller('MainCtrl', function ($scope, ngDialog) {
+        $scope.clickToOpen = function () {
+            ngDialog.open({ template: 'test1.html' });
+        };
+    });
+</script>
+</body>
+</html>

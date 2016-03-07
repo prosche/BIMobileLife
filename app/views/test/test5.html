@@ -1,0 +1,984 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>
+    <meta name="keywords" content="angularjs 插件 ng-infinite-scroll 滚动加载 无限加载">
+    <meta name="description" content="通过angularjs插件滚动加载内容列表">
+    <link rel="index" title="郑州网建-上海网建" href="http://camnpr.com/">
+    <meta name="robots" content="all">
+    <title>自动加载分页-无限加载数据-AngularJS</title>
+    <script src="../js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="../js/angularJs/angular.min.js" type="text/javascript"></script>
+    <script src="../js/angularJs/ng-infinite-scroll.min.js" type="text/javascript"></script>
+    <script>
+        var myApp = angular.module('myApp', ['infinite-scroll']);
+
+        myApp.controller('DemoController', function ($scope, Reddit) {
+            $scope.reddit = new Reddit();
+        });
+
+        // Reddit constructor function to encapsulate HTTP and pagination logic
+        myApp.factory('Reddit', function ($http) {
+            var Reddit = function () {
+                this.items = [];
+                this.busy = false;
+                this.after = '';
+            };
+
+            Reddit.prototype.nextPage = function () {
+                if (this.busy) return;
+                this.busy = true;
+
+                var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
+                $http.jsonp(url).success(function (data) {
+                    var items = data.data.children;
+                    for (var i = 0; i < items.length; i++) {
+                        this.items.push(items[i].data);
+                    }
+                    this.after = "t3_" + this.items[this.items.length - 1].id;
+                    this.busy = false;
+                } .bind(this));
+            };
+
+            return Reddit;
+        });
+    </script>
+    <style type="text/css">
+        .load-data-container{width:960px;margin:0 auto;}
+        .score{font-size:20px;background:#eee;color:red;padding:9px;float:left;margin-right:5px;}
+        .title, small{float:left;}
+        .title a{font-size:17px;display:inline-block;width:890px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .title a, small a{color:#2ba6cb;text-decoration:none;}
+        small{display:block;font-size:85%;padding-top:3px;width:90%;}
+        .data-item{border-bottom:dotted 3px #eee;margin-bottom:8px;padding-bottom:5px}
+    </style>
+    <script src="http://bdimg.share.baidu.com/static/api/js/share.js?v=86835285.js?cdnversion=400158"></script><link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_32.css"></head>
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="http://pos.baidu.com/wh/o.htm?ltr=https%3A%2F%2Fwww.google.com.hk%2F&amp;cf=u" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div>
+<div style="width:960px;overflow:hidden;margin:0 auto;">
+    <script type="text/javascript">
+        /*通栏960*90，创建于2013-5-22*/
+        var cpro_id = "u1289212";
+    </script>
+    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1289212_0"><iframe id="cproIframe_u1289212_1" width="960" height="90" src="http://pos.baidu.com/acom?adn=4&amp;at=134&amp;aurl=&amp;cad=1&amp;ccd=24&amp;cec=UTF-8&amp;cfv=18&amp;ch=0&amp;col=zh-CN&amp;conOP=0&amp;cpa=1&amp;dai=1&amp;dis=0&amp;layout_filter=rank%2Ctabcloud&amp;ltr=https%3A%2F%2Fwww.google.com.hk%2F&amp;ltu=http%3A%2F%2Fcamnpr.com%2FTuiJianTools%2Fjsdemo%2FngInfiniteScroll_demo_async.html&amp;lunum=6&amp;n=57089067_cpr&amp;pcs=1366x642&amp;pis=10000x10000&amp;ps=8x203&amp;psr=1366x768&amp;pss=1366x16&amp;qn=c64235907c4d2420&amp;rad=&amp;rsi0=960&amp;rsi1=90&amp;rsi5=4&amp;rss0=%23FFFFFF&amp;rss1=%23FFFFFF&amp;rss2=%230000ff&amp;rss3=%23444444&amp;rss4=%23008000&amp;rss5=&amp;rss6=%23e10900&amp;rss7=&amp;scale=&amp;skin=&amp;td_id=1289212&amp;tn=text_default_960_90&amp;tpr=1440573364171&amp;ts=1&amp;version=2.0&amp;xuanting=0&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dc=2&amp;di=u1289212&amp;ti=%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%88%86%E9%A1%B5-%E6%97%A0%E9%99%90%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE-AngularJS&amp;tt=1440573364151.24.264.269" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div><script charset="utf-8" src="http://pos.baidu.com/acom?di=u1289212&amp;dcb=BAIDU_DUP2_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=1&amp;dds=&amp;drs=1&amp;dvi=1440492674&amp;ltu=http%3A%2F%2Fcamnpr.com%2FTuiJianTools%2Fjsdemo%2FngInfiniteScroll_demo_async.html&amp;liu=&amp;ltr=https%3A%2F%2Fwww.google.com.hk%2F&amp;lcr=&amp;ps=8x203&amp;psr=1366x768&amp;par=1366x728&amp;pcs=1366x642&amp;pss=1366x16&amp;pis=-1x-1&amp;cfv=18&amp;ccd=24&amp;chi=1&amp;cja=true&amp;cpl=5&amp;cmi=7&amp;cce=true&amp;col=zh-CN&amp;cec=UTF-8&amp;cdo=-1&amp;tsr=10&amp;tlm=1414494534&amp;tcn=1440573364&amp;tpr=1440573364171&amp;dpt=none&amp;coa=&amp;dpr=1&amp;ti=%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%88%86%E9%A1%B5-%E6%97%A0%E9%99%90%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE-AngularJS&amp;baidu_id="></script>
+</div>
+<div class="load-data-container ng-scope" ng-app="myApp" ng-controller="DemoController">
+
+    <div class="bdsharebuttonbox bdshare-button-style1-32" style="float:right" data-bd-bind="1440573365659"><a href="#" style="border:none" class="bds_more" data-cmd="more"></a><a href="#" style="border:none" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" style="border:none" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" style="border:none" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" style="border:none" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" style="border:none" class="bds_t163" data-cmd="t163" title="分享到网易微博"></a></div>
+    <script>          window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {}, "image": { "viewList": ["qzone", "tsina", "tqq", "renren", "t163"], "viewText": "分享到：", "viewSize": "16"}/*, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "t163"]}*/ }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=86835285.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+    <h3 style="float:left;">以下内容来自：Reddit - <i style="font-size:15px;font-weight:normal">通过AngularJS插件<code>ng-infinite-scroll</code>向下滚动加载更多的数据</i></h3>
+    <div style="clear:both;"></div>
+
+    <div infinite-scroll="reddit.nextPage()" infinite-scroll-disabled="reddit.busy" infinite-scroll-distance="1">
+        <!-- ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">7387</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/hgBl6Px.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/hgBl6Px.jpg">You seeing what I'm seeing?</a>
+          </span>
+        <small class="ng-binding">by jaguarbitch -
+            <a ng-href="http://reddit.com/r/pics/comments/3iew6b/you_seeing_what_im_seeing/" target="_blank" class="ng-binding" href="http://reddit.com/r/pics/comments/3iew6b/you_seeing_what_im_seeing/">1056 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5945</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/azzbqMX" target="_blank" class="ng-binding" href="http://imgur.com/azzbqMX">Rowdy could easily drag my 2 year old around the room. Instead, he just laid there with a smile on his face, tugging at the rope while my son squealed with glee.</a>
+          </span>
+        <small class="ng-binding">by _HEY_EARL_ -
+            <a ng-href="http://reddit.com/r/aww/comments/3iefez/rowdy_could_easily_drag_my_2_year_old_around_the/" target="_blank" class="ng-binding" href="http://reddit.com/r/aww/comments/3iefez/rowdy_could_easily_drag_my_2_year_old_around_the/">268 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">7036</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/x6Qin6q" target="_blank" class="ng-binding" href="http://imgur.com/x6Qin6q">My friend works at Yellowstone and some guests actually left this with the front desk upon checkout this morning</a>
+          </span>
+        <small class="ng-binding">by the_midgetaur -
+            <a ng-href="http://reddit.com/r/funny/comments/3ie6n3/my_friend_works_at_yellowstone_and_some_guests/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3ie6n3/my_friend_works_at_yellowstone_and_some_guests/">1380 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3552</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/W1fD17l" target="_blank" class="ng-binding" href="http://imgur.com/W1fD17l">This giant door with a very regular handle.</a>
+          </span>
+        <small class="ng-binding">by rovertrexx -
+            <a ng-href="http://reddit.com/r/mildlyinteresting/comments/3ieven/this_giant_door_with_a_very_regular_handle/" target="_blank" class="ng-binding" href="http://reddit.com/r/mildlyinteresting/comments/3ieven/this_giant_door_with_a_very_regular_handle/">118 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4329</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/explainlikeimfive/comments/3ieifd/eli5_stephen_hawkings_new_theory_on_black_holes/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/explainlikeimfive/comments/3ieifd/eli5_stephen_hawkings_new_theory_on_black_holes/">ELI5: Stephen Hawking's new theory on black holes</a>
+          </span>
+        <small class="ng-binding">by alex_dlc -
+            <a ng-href="http://reddit.com/r/explainlikeimfive/comments/3ieifd/eli5_stephen_hawkings_new_theory_on_black_holes/" target="_blank" class="ng-binding" href="http://reddit.com/r/explainlikeimfive/comments/3ieifd/eli5_stephen_hawkings_new_theory_on_black_holes/">706 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6165</span>
+          <span class="title">
+            <a ng-href="http://www.ew.com/article/2015/08/25/curt-schilling-suspended-espn" target="_blank" class="ng-binding" href="http://www.ew.com/article/2015/08/25/curt-schilling-suspended-espn">Curt Schilling suspended by ESPN after tweet comparing Muslims to Nazis: “It’s said only 5-10% of Muslims are extremists. In 1940, only 7% of Germans were Nazis. How’d that go?”</a>
+          </span>
+        <small class="ng-binding">by Sybles -
+            <a ng-href="http://reddit.com/r/news/comments/3idwwc/curt_schilling_suspended_by_espn_after_tweet/" target="_blank" class="ng-binding" href="http://reddit.com/r/news/comments/3idwwc/curt_schilling_suspended_by_espn_after_tweet/">3870 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6564</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/ViJvaqF.gifv" target="_blank" class="ng-binding" href="http://i.imgur.com/ViJvaqF.gifv">Deers wading through water, like a fairy tale</a>
+          </span>
+        <small class="ng-binding">by iBleeedorange -
+            <a ng-href="http://reddit.com/r/gifs/comments/3idppz/deers_wading_through_water_like_a_fairy_tale/" target="_blank" class="ng-binding" href="http://reddit.com/r/gifs/comments/3idppz/deers_wading_through_water_like_a_fairy_tale/">713 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3364</span>
+          <span class="title">
+            <a ng-href="http://youtu.be/oBq-zuyfMSU" target="_blank" class="ng-binding" href="http://youtu.be/oBq-zuyfMSU">this is what my friend makes and sends me when she's drunk and alone and full of woe.</a>
+          </span>
+        <small class="ng-binding">by ProfessorDrScience -
+            <a ng-href="http://reddit.com/r/videos/comments/3ieke2/this_is_what_my_friend_makes_and_sends_me_when/" target="_blank" class="ng-binding" href="http://reddit.com/r/videos/comments/3ieke2/this_is_what_my_friend_makes_and_sends_me_when/">356 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6495</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/Showerthoughts/comments/3idpcz/there_should_be_confetti_in_tires_so_when_there/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/Showerthoughts/comments/3idpcz/there_should_be_confetti_in_tires_so_when_there/">There should be confetti in tires so when there is a blow out it's still kind of an okay day</a>
+          </span>
+        <small class="ng-binding">by Eye_Decay -
+            <a ng-href="http://reddit.com/r/Showerthoughts/comments/3idpcz/there_should_be_confetti_in_tires_so_when_there/" target="_blank" class="ng-binding" href="http://reddit.com/r/Showerthoughts/comments/3idpcz/there_should_be_confetti_in_tires_so_when_there/">488 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3945</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/4PC1oo9.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/4PC1oo9.jpg">Yosemite Sunrise [oc] [5760x3840]</a>
+          </span>
+        <small class="ng-binding">by jwolfbluemoon -
+            <a ng-href="http://reddit.com/r/EarthPorn/comments/3iebzh/yosemite_sunrise_oc_5760x3840/" target="_blank" class="ng-binding" href="http://reddit.com/r/EarthPorn/comments/3iebzh/yosemite_sunrise_oc_5760x3840/">139 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1448</span>
+          <span class="title">
+            <a ng-href="http://www.atlantic-times.com/archive_detail.php?recordID=615" target="_blank" class="ng-binding" href="http://www.atlantic-times.com/archive_detail.php?recordID=615">TIL after trying for a decade, Wal-Mart withdrew from Germany in 2006 b/c it couldn’t undercut local discounters, customers were creeped out by the greeters, employees were upset by the morning chant &amp;amp; other management practices, &amp;amp; the public was outraged by its ban on flirting in the workplace</a>
+          </span>
+        <small class="ng-binding">by lord_of_the_bees -
+            <a ng-href="http://reddit.com/r/todayilearned/comments/3ifg4o/til_after_trying_for_a_decade_walmart_withdrew/" target="_blank" class="ng-binding" href="http://reddit.com/r/todayilearned/comments/3ifg4o/til_after_trying_for_a_decade_walmart_withdrew/">248 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6352</span>
+          <span class="title">
+            <a ng-href="http://gfycat.com/KindlyConfusedAstrangiacoral" target="_blank" class="ng-binding" href="http://gfycat.com/KindlyConfusedAstrangiacoral">"I like to fly my plane."</a>
+          </span>
+        <small class="ng-binding">by Sippingin -
+            <a ng-href="http://reddit.com/r/gaming/comments/3idmwo/i_like_to_fly_my_plane/" target="_blank" class="ng-binding" href="http://reddit.com/r/gaming/comments/3idmwo/i_like_to_fly_my_plane/">721 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3325</span>
+          <span class="title">
+            <a ng-href="http://25.media.tumblr.com/914368ce73f939279ce768ebbc7f6a6c/tumblr_n1yvkuVZcm1sy9ijlo1_500.jpg" target="_blank" class="ng-binding" href="http://25.media.tumblr.com/914368ce73f939279ce768ebbc7f6a6c/tumblr_n1yvkuVZcm1sy9ijlo1_500.jpg">[Image] Thank you to whoever wrote this</a>
+          </span>
+        <small class="ng-binding">by ninjustice -
+            <a ng-href="http://reddit.com/r/GetMotivated/comments/3idwbo/image_thank_you_to_whoever_wrote_this/" target="_blank" class="ng-binding" href="http://reddit.com/r/GetMotivated/comments/3idwbo/image_thank_you_to_whoever_wrote_this/">200 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5556</span>
+          <span class="title">
+            <a ng-href="http://www.marieclaire.co.uk/blogs/550256/feminists-in-mexico-are-being-warned-to-be-quiet-or-be-killed.html" target="_blank" class="ng-binding" href="http://www.marieclaire.co.uk/blogs/550256/feminists-in-mexico-are-being-warned-to-be-quiet-or-be-killed.html">Feminists In Mexico Are Being Warned To Be Quiet Or Be Killed</a>
+          </span>
+        <small class="ng-binding">by rkkim -
+            <a ng-href="http://reddit.com/r/worldnews/comments/3id55j/feminists_in_mexico_are_being_warned_to_be_quiet/" target="_blank" class="ng-binding" href="http://reddit.com/r/worldnews/comments/3id55j/feminists_in_mexico_are_being_warned_to_be_quiet/">3581 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1009</span>
+          <span class="title">
+            <a ng-href="http://news.sciencemag.org/scientific-community/2015/08/brief-papers-shorter-titles-get-more-citations-study-suggests?rss=1" target="_blank" class="ng-binding" href="http://news.sciencemag.org/scientific-community/2015/08/brief-papers-shorter-titles-get-more-citations-study-suggests?rss=1">papers with shorter titles get more citations</a>
+          </span>
+        <small class="ng-binding">by kemarkha -
+            <a ng-href="http://reddit.com/r/science/comments/3if63k/papers_with_shorter_titles_get_more_citations/" target="_blank" class="ng-binding" href="http://reddit.com/r/science/comments/3if63k/papers_with_shorter_titles_get_more_citations/">54 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">995</span>
+          <span class="title">
+            <a ng-href="http://ibelieveyouitsnotyourfault.tumblr.com/post/95389261470/it-was-easier-to-give-in-than-keep-running" target="_blank" class="ng-binding" href="http://ibelieveyouitsnotyourfault.tumblr.com/post/95389261470/it-was-easier-to-give-in-than-keep-running">This made me sick to my stomach because I have never read anything so true of what it is like to be a woman</a>
+          </span>
+        <small class="ng-binding">by BurpyMcPoop -
+            <a ng-href="http://reddit.com/r/TwoXChromosomes/comments/3iexjw/this_made_me_sick_to_my_stomach_because_i_have/" target="_blank" class="ng-binding" href="http://reddit.com/r/TwoXChromosomes/comments/3iexjw/this_made_me_sick_to_my_stomach_because_i_have/">546 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6787</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/LifeProTips/comments/3icadh/lpt_make_your_sandpaper_last_ten_times_longer_by/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/LifeProTips/comments/3icadh/lpt_make_your_sandpaper_last_ten_times_longer_by/">LPT: Make your sandpaper last ten times longer by putting duct tape on the back</a>
+          </span>
+        <small class="ng-binding">by JimInMiami -
+            <a ng-href="http://reddit.com/r/LifeProTips/comments/3icadh/lpt_make_your_sandpaper_last_ten_times_longer_by/" target="_blank" class="ng-binding" href="http://reddit.com/r/LifeProTips/comments/3icadh/lpt_make_your_sandpaper_last_ten_times_longer_by/">803 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5274</span>
+          <span class="title">
+            <a ng-href="http://www.washingtonpost.com/news/speaking-of-science/wp/2015/08/25/stephen-hawking-believes-hes-solved-a-huge-mystery-about-black-holes/?tid=sm_tw" target="_blank" class="ng-binding" href="http://www.washingtonpost.com/news/speaking-of-science/wp/2015/08/25/stephen-hawking-believes-hes-solved-a-huge-mystery-about-black-holes/?tid=sm_tw">Stephen Hawking believes he’s solved a huge mystery about black holes</a>
+          </span>
+        <small class="ng-binding">by ginamariestalin -
+            <a ng-href="http://reddit.com/r/space/comments/3icm5r/stephen_hawking_believes_hes_solved_a_huge/" target="_blank" class="ng-binding" href="http://reddit.com/r/space/comments/3icm5r/stephen_hawking_believes_hes_solved_a_huge/">817 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2172</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/a/XNYRT" target="_blank" class="ng-binding" href="http://imgur.com/a/XNYRT">Thunder in the Distance, Collection of Michael Kagen's work, Oil and linen, 2014</a>
+          </span>
+        <small class="ng-binding">by noahsbun -
+            <a ng-href="http://reddit.com/r/Art/comments/3idqia/thunder_in_the_distance_collection_of_michael/" target="_blank" class="ng-binding" href="http://reddit.com/r/Art/comments/3idqia/thunder_in_the_distance_collection_of_michael/">67 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4416</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/Jokes/comments/3icqz1/hows_donald_trump_going_to_get_rid_of_all_the/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/Jokes/comments/3icqz1/hows_donald_trump_going_to_get_rid_of_all_the/">How's Donald Trump going to get rid of all the Mexicans?</a>
+          </span>
+        <small class="ng-binding">by Jeremy_Alberts -
+            <a ng-href="http://reddit.com/r/Jokes/comments/3icqz1/hows_donald_trump_going_to_get_rid_of_all_the/" target="_blank" class="ng-binding" href="http://reddit.com/r/Jokes/comments/3icqz1/hows_donald_trump_going_to_get_rid_of_all_the/">548 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5132</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/IAmA/comments/3icikb/we_are_larry_lessig_presidential_candidate_maybe/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/IAmA/comments/3icikb/we_are_larry_lessig_presidential_candidate_maybe/">We are Larry Lessig (presidential candidate, maybe) and Jimmy Wales (founder of Wikipedia). We’re lighting up the Internet to fix democracy first. Ask us anything!</a>
+          </span>
+        <small class="ng-binding">by lessig -
+            <a ng-href="http://reddit.com/r/IAmA/comments/3icikb/we_are_larry_lessig_presidential_candidate_maybe/" target="_blank" class="ng-binding" href="http://reddit.com/r/IAmA/comments/3icikb/we_are_larry_lessig_presidential_candidate_maybe/">1926 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3253</span>
+          <span class="title">
+            <a ng-href="http://www.forbes.com/sites/scottmendelson/2015/08/24/so-i-guess-terminator-genisys-isnt-a-flop-anymore/" target="_blank" class="ng-binding" href="http://www.forbes.com/sites/scottmendelson/2015/08/24/so-i-guess-terminator-genisys-isnt-a-flop-anymore/">'Terminator Genisys' Is A Flop No More - 4th highest China opening of all time.</a>
+          </span>
+        <small class="ng-binding">by SetYourGoals -
+            <a ng-href="http://reddit.com/r/movies/comments/3id3e9/terminator_genisys_is_a_flop_no_more_4th_highest/" target="_blank" class="ng-binding" href="http://reddit.com/r/movies/comments/3id3e9/terminator_genisys_is_a_flop_no_more_4th_highest/">634 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">765</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/nosleep/comments/3iex1h/im_a_search_and_rescue_officer_for_the_us_forest/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/nosleep/comments/3iex1h/im_a_search_and_rescue_officer_for_the_us_forest/">I'm a Search and Rescue Officer for the US Forest Service, I have some stories to tell</a>
+          </span>
+        <small class="ng-binding">by searchandrescuewoods -
+            <a ng-href="http://reddit.com/r/nosleep/comments/3iex1h/im_a_search_and_rescue_officer_for_the_us_forest/" target="_blank" class="ng-binding" href="http://reddit.com/r/nosleep/comments/3iex1h/im_a_search_and_rescue_officer_for_the_us_forest/">98 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1137</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/Fitness/comments/3iee0p/does_anyone_here_workout_just_so_they_can_eat/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/Fitness/comments/3iee0p/does_anyone_here_workout_just_so_they_can_eat/">Does anyone here workout just so they can eat?</a>
+          </span>
+        <small class="ng-binding">by jwuzy -
+            <a ng-href="http://reddit.com/r/Fitness/comments/3iee0p/does_anyone_here_workout_just_so_they_can_eat/" target="_blank" class="ng-binding" href="http://reddit.com/r/Fitness/comments/3iee0p/does_anyone_here_workout_just_so_they_can_eat/">353 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2305</span>
+          <span class="title">
+            <a ng-href="http://nathanfriend.io/inspirograph/" target="_blank" class="ng-binding" href="http://nathanfriend.io/inspirograph/">Take a spirograph break! (Posted this earlier this year and the general consensus was people wanted to be reminded)</a>
+          </span>
+        <small class="ng-binding">by scarinaaron -
+            <a ng-href="http://reddit.com/r/InternetIsBeautiful/comments/3idboi/take_a_spirograph_break_posted_this_earlier_this/" target="_blank" class="ng-binding" href="http://reddit.com/r/InternetIsBeautiful/comments/3idboi/take_a_spirograph_break_posted_this_earlier_this/">129 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4801</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/qZOhWM0.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/qZOhWM0.jpg">PsBattle: An elderly woman observes a young topless woman wearing body paint in Times Square. (NSFW)</a>
+          </span>
+        <small class="ng-binding">by GallowBoob -
+            <a ng-href="http://reddit.com/r/photoshopbattles/comments/3ic9hd/psbattle_an_elderly_woman_observes_a_young/" target="_blank" class="ng-binding" href="http://reddit.com/r/photoshopbattles/comments/3ic9hd/psbattle_an_elderly_woman_observes_a_young/">619 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5584</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/cWqOFYQ" target="_blank" class="ng-binding" href="http://imgur.com/cWqOFYQ">85 years old today, Sean Connery circa 1960</a>
+          </span>
+        <small class="ng-binding">by elee0228 -
+            <a ng-href="http://reddit.com/r/OldSchoolCool/comments/3ic1ib/85_years_old_today_sean_connery_circa_1960/" target="_blank" class="ng-binding" href="http://reddit.com/r/OldSchoolCool/comments/3ic1ib/85_years_old_today_sean_connery_circa_1960/">545 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4498</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3icb0e/parent_of_a_weird_kid_how_did_you_react_when_you/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3icb0e/parent_of_a_weird_kid_how_did_you_react_when_you/">Parent of a "weird kid", how did you react when you realized that your kid did weird/creepy stuff?</a>
+          </span>
+        <small class="ng-binding">by SwedishFishOnReddit -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3icb0e/parent_of_a_weird_kid_how_did_you_react_when_you/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3icb0e/parent_of_a_weird_kid_how_did_you_react_when_you/">4249 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4875</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/a/TaM7A" target="_blank" class="ng-binding" href="http://imgur.com/a/TaM7A">Great sportsmanship shown today during Chinese Taipei and Uganda Little League game</a>
+          </span>
+        <small class="ng-binding">by iBleeedorange -
+            <a ng-href="http://reddit.com/r/sports/comments/3ic6se/great_sportsmanship_shown_today_during_chinese/" target="_blank" class="ng-binding" href="http://reddit.com/r/sports/comments/3ic6se/great_sportsmanship_shown_today_during_chinese/">690 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3303</span>
+          <span class="title">
+            <a ng-href="http://arstechnica.co.uk/tech-policy/2015/08/facing-possible-ban-more-americans-are-buying-new-and-legal-900-flamethrowers/" target="_blank" class="ng-binding" href="http://arstechnica.co.uk/tech-policy/2015/08/facing-possible-ban-more-americans-are-buying-new-and-legal-900-flamethrowers/">Facing possible ban, more Americans are buying new (and legal) $900 flamethrowers</a>
+          </span>
+        <small class="ng-binding">by ulasb -
+            <a ng-href="http://reddit.com/r/nottheonion/comments/3icn6l/facing_possible_ban_more_americans_are_buying_new/" target="_blank" class="ng-binding" href="http://reddit.com/r/nottheonion/comments/3icn6l/facing_possible_ban_more_americans_are_buying_new/">698 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4687</span>
+          <span class="title">
+            <a ng-href="http://flavorwire.com/534644/wu-tang-clan-still-hasnt-sold-that-5-million-album/" target="_blank" class="ng-binding" href="http://flavorwire.com/534644/wu-tang-clan-still-hasnt-sold-that-5-million-album/">Wu-Tang Clan Still Hasn’t Sold That $5 Million Album</a>
+          </span>
+        <small class="ng-binding">by mtown4ever -
+            <a ng-href="http://reddit.com/r/Music/comments/3ic5kv/wutang_clan_still_hasnt_sold_that_5_million_album/" target="_blank" class="ng-binding" href="http://reddit.com/r/Music/comments/3ic5kv/wutang_clan_still_hasnt_sold_that_5_million_album/">743 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">384</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/tifu/comments/3ifc0m/tifu_by_educating_my_son_too_well/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/tifu/comments/3ifc0m/tifu_by_educating_my_son_too_well/">TIFU by educating my son too well.</a>
+          </span>
+        <small class="ng-binding">by dogboard -
+            <a ng-href="http://reddit.com/r/tifu/comments/3ifc0m/tifu_by_educating_my_son_too_well/" target="_blank" class="ng-binding" href="http://reddit.com/r/tifu/comments/3ifc0m/tifu_by_educating_my_son_too_well/">64 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">386</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/3PSXPHD.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/3PSXPHD.jpg">Finally tried my hand at charcuterie. That's bacon jam.</a>
+          </span>
+        <small class="ng-binding">by OpenForRepairs -
+            <a ng-href="http://reddit.com/r/food/comments/3if875/finally_tried_my_hand_at_charcuterie_thats_bacon/" target="_blank" class="ng-binding" href="http://reddit.com/r/food/comments/3if875/finally_tried_my_hand_at_charcuterie_thats_bacon/">58 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">841</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=DfvaKIu7tJY" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=DfvaKIu7tJY">Michael Dorn talks about the potential "Star Trek TNG: , The Worf Chronicles" ("Captain Worf") series and who he would like to make an appearance</a>
+          </span>
+        <small class="ng-binding">by hfuhruhurr1 -
+            <a ng-href="http://reddit.com/r/television/comments/3ie13q/michael_dorn_talks_about_the_potential_star_trek/" target="_blank" class="ng-binding" href="http://reddit.com/r/television/comments/3ie13q/michael_dorn_talks_about_the_potential_star_trek/">340 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2820</span>
+          <span class="title">
+            <a ng-href="http://newyork.cbslocal.com/2015/08/14/subway-sex-assault-park-slope-maurice-osborne/" target="_blank" class="ng-binding" href="http://newyork.cbslocal.com/2015/08/14/subway-sex-assault-park-slope-maurice-osborne/">Subway Hero Rescues Woman Being Sexually Assaulted</a>
+          </span>
+        <small class="ng-binding">by argunaw -
+            <a ng-href="http://reddit.com/r/UpliftingNews/comments/3ic1bq/subway_hero_rescues_woman_being_sexually_assaulted/" target="_blank" class="ng-binding" href="http://reddit.com/r/UpliftingNews/comments/3ic1bq/subway_hero_rescues_woman_being_sexually_assaulted/">253 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3579</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/9pG4FoV.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/9pG4FoV.jpg">The psychiatrist by Pepijn Simon</a>
+          </span>
+        <small class="ng-binding">by iBleeedorange -
+            <a ng-href="http://reddit.com/r/creepy/comments/3ibrr1/the_psychiatrist_by_pepijn_simon/" target="_blank" class="ng-binding" href="http://reddit.com/r/creepy/comments/3ibrr1/the_psychiatrist_by_pepijn_simon/">102 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5334</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/a/eJhLN" target="_blank" class="ng-binding" href="http://imgur.com/a/eJhLN">Very very modest countertop kitchen shelves. I'm a poor grad student, not a carpenter. Whole thing cost around $35USD</a>
+          </span>
+        <small class="ng-binding">by theOpressor -
+            <a ng-href="http://reddit.com/r/DIY/comments/3ibehp/very_very_modest_countertop_kitchen_shelves_im_a/" target="_blank" class="ng-binding" href="http://reddit.com/r/DIY/comments/3ibehp/very_very_modest_countertop_kitchen_shelves_im_a/">560 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5450</span>
+          <span class="title">
+            <a ng-href="http://www.kurzweilai.net/rechargeable-batteries-with-almost-indefinite-lifetimes-coming-say-mit-samsung-engineers" target="_blank" class="ng-binding" href="http://www.kurzweilai.net/rechargeable-batteries-with-almost-indefinite-lifetimes-coming-say-mit-samsung-engineers">Rechargeable batteries with almost indefinite lifetimes coming, say MIT-Samsung engineers</a>
+          </span>
+        <small class="ng-binding">by lughnasadh -
+            <a ng-href="http://reddit.com/r/Futurology/comments/3ibdwn/rechargeable_batteries_with_almost_indefinite/" target="_blank" class="ng-binding" href="http://reddit.com/r/Futurology/comments/3ibdwn/rechargeable_batteries_with_almost_indefinite/">775 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4331</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/askscience/comments/3ibg5b/does_sexual_preference_straightlgbt_change_on/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/askscience/comments/3ibg5b/does_sexual_preference_straightlgbt_change_on/">Does sexual preference (Straight/LGBT) change on memory loss ?</a>
+          </span>
+        <small class="ng-binding">by jk_here4all -
+            <a ng-href="http://reddit.com/r/askscience/comments/3ibg5b/does_sexual_preference_straightlgbt_change_on/" target="_blank" class="ng-binding" href="http://reddit.com/r/askscience/comments/3ibg5b/does_sexual_preference_straightlgbt_change_on/">611 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1521</span>
+          <span class="title">
+            <a ng-href="http://bgr.com/2015/08/25/sony-drone-prototype-speed/" target="_blank" class="ng-binding" href="http://bgr.com/2015/08/25/sony-drone-prototype-speed/">Sony Drone prototype can fly 106 MPH and stay in the air for two hours straight</a>
+          </span>
+        <small class="ng-binding">by thatshirtman -
+            <a ng-href="http://reddit.com/r/gadgets/comments/3icguv/sony_drone_prototype_can_fly_106_mph_and_stay_in/" target="_blank" class="ng-binding" href="http://reddit.com/r/gadgets/comments/3icguv/sony_drone_prototype_can_fly_106_mph_and_stay_in/">194 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">327</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/history/comments/3iefqm/in_the_famous_wwii_movie_der_untergang_downfall/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/history/comments/3iefqm/in_the_famous_wwii_movie_der_untergang_downfall/">In the famous WWII movie Der Untergang (Downfall), Soviet soldiers are shown dancing, singing, and playing music celebrating their victory over Hitler, is there any authentic photos/footage of allies dancing/celebrating in Berlin/Other places?</a>
+          </span>
+        <small class="ng-binding">by ZombineTM -
+            <a ng-href="http://reddit.com/r/history/comments/3iefqm/in_the_famous_wwii_movie_der_untergang_downfall/" target="_blank" class="ng-binding" href="http://reddit.com/r/history/comments/3iefqm/in_the_famous_wwii_movie_der_untergang_downfall/">117 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2243</span>
+          <span class="title">
+            <a ng-href="http://www.openculture.com/2015/08/who-was-afraid-of-ray-bradbury-science-fiction-the-fbi-it-turns-out-1959.html" target="_blank" class="ng-binding" href="http://www.openculture.com/2015/08/who-was-afraid-of-ray-bradbury-science-fiction-the-fbi-it-turns-out-1959.html">The FBI was concerned about Ray Bradbury's power to spread communist ideals through science fiction</a>
+          </span>
+        <small class="ng-binding">by mr_benasam -
+            <a ng-href="http://reddit.com/r/books/comments/3ibwj1/the_fbi_was_concerned_about_ray_bradburys_power/" target="_blank" class="ng-binding" href="http://reddit.com/r/books/comments/3ibwj1/the_fbi_was_concerned_about_ray_bradburys_power/">368 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">264</span>
+          <span class="title">
+            <a ng-href="http://www.onearth.org/earthwire/smoke-western-wildfires" target="_blank" class="ng-binding" href="http://www.onearth.org/earthwire/smoke-western-wildfires">These are all the wildfires burning through America right now</a>
+          </span>
+        <small class="ng-binding">by dustinsmusings -
+            <a ng-href="http://reddit.com/r/dataisbeautiful/comments/3iehlf/these_are_all_the_wildfires_burning_through/" target="_blank" class="ng-binding" href="http://reddit.com/r/dataisbeautiful/comments/3iehlf/these_are_all_the_wildfires_burning_through/">87 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1593</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/WritingPrompts/comments/3ibual/wp_you_are_a_worldclass_programmer_who_has_died/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/WritingPrompts/comments/3ibual/wp_you_are_a_worldclass_programmer_who_has_died/">[WP] You are a world-class programmer who has died. God agrees to allow you in to Heaven on the condition that you work for him while he debugs the human body. Write the patch notes for the next version of humans.</a>
+          </span>
+        <small class="ng-binding">by The_Mexecutioner -
+            <a ng-href="http://reddit.com/r/WritingPrompts/comments/3ibual/wp_you_are_a_worldclass_programmer_who_has_died/" target="_blank" class="ng-binding" href="http://reddit.com/r/WritingPrompts/comments/3ibual/wp_you_are_a_worldclass_programmer_who_has_died/">454 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1102</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=BjvzJO-6ESc&amp;amp;ab_channel=j054uaj054ua" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=BjvzJO-6ESc&amp;amp;ab_channel=j054uaj054ua">Choke (1999) - Choke follows freestyle fighting champion Rickson Gracie as he prepares to defend his title in the Vale Tudo Freestyle Fighting Championship in Tokyo. Choke is a behind-the-scenes look at the world of no-rules fighting.</a>
+          </span>
+        <small class="ng-binding">by dantzbam -
+            <a ng-href="http://reddit.com/r/Documentaries/comments/3ic11q/choke_1999_choke_follows_freestyle_fighting/" target="_blank" class="ng-binding" href="http://reddit.com/r/Documentaries/comments/3ic11q/choke_1999_choke_follows_freestyle_fighting/">205 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1724</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/personalfinance/comments/3ibi1r/air_conditioner_broke_2_weeks_ago_landlord_cant/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/personalfinance/comments/3ibi1r/air_conditioner_broke_2_weeks_ago_landlord_cant/">Air Conditioner broke 2 weeks ago. Landlord "can't afford to fix it". Have kids, live in Texas. What can I do?</a>
+          </span>
+        <small class="ng-binding">by dark_photon -
+            <a ng-href="http://reddit.com/r/personalfinance/comments/3ibi1r/air_conditioner_broke_2_weeks_ago_landlord_cant/" target="_blank" class="ng-binding" href="http://reddit.com/r/personalfinance/comments/3ibi1r/air_conditioner_broke_2_weeks_ago_landlord_cant/">701 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">604</span>
+          <span class="title">
+            <a ng-href="https://soundcloud.com/erynallenkane/eryn-allen-kane-slipping" target="_blank" class="ng-binding" href="https://soundcloud.com/erynallenkane/eryn-allen-kane-slipping">Eryn Allen Kane -- Slipping [soul/R&amp;amp;B] (2015)</a>
+          </span>
+        <small class="ng-binding">by nicky_twodoors -
+            <a ng-href="http://reddit.com/r/listentothis/comments/3ic15r/eryn_allen_kane_slipping_soulrb_2015/" target="_blank" class="ng-binding" href="http://reddit.com/r/listentothis/comments/3ic15r/eryn_allen_kane_slipping_soulrb_2015/">32 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">315</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=dYAoiLhOuao&amp;amp;index=6&amp;amp;list=PLtKNX4SfKpzUURFV6ucpn2TGaZYqXyrai" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=dYAoiLhOuao&amp;amp;index=6&amp;amp;list=PLtKNX4SfKpzUURFV6ucpn2TGaZYqXyrai">Metaphysics: the Ship of Theseus problem</a>
+          </span>
+        <small class="ng-binding">by wiphiadmin -
+            <a ng-href="http://reddit.com/r/philosophy/comments/3ic0wq/metaphysics_the_ship_of_theseus_problem/" target="_blank" class="ng-binding" href="http://reddit.com/r/philosophy/comments/3ic0wq/metaphysics_the_ship_of_theseus_problem/">292 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">295</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=52MqOuh-MBg" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=52MqOuh-MBg">Going Clear Scientology and the Prison of Belief (2015) Filmmaker Alex Gibney interviews former members of the Church of Scientology and reveals abuses and strange practices within the controversial organization.</a>
+          </span>
+        <small class="ng-binding">by -DashCamCanuck -
+            <a ng-href="http://reddit.com/r/Documentaries/comments/3idrz7/going_clear_scientology_and_the_prison_of_belief/" target="_blank" class="ng-binding" href="http://reddit.com/r/Documentaries/comments/3idrz7/going_clear_scientology_and_the_prison_of_belief/">25 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3794</span>
+          <span class="title">
+            <a ng-href="http://www.buytshirtsonline.co.uk/colour-perception" target="_blank" class="ng-binding" href="http://www.buytshirtsonline.co.uk/colour-perception">How males and females perceive the colours you wear</a>
+          </span>
+        <small class="ng-binding">by MattTilling -
+            <a ng-href="http://reddit.com/r/dataisbeautiful/comments/3iba6a/how_males_and_females_perceive_the_colours_you/" target="_blank" class="ng-binding" href="http://reddit.com/r/dataisbeautiful/comments/3iba6a/how_males_and_females_perceive_the_colours_you/">813 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">524</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/a/4HWYt" target="_blank" class="ng-binding" href="http://imgur.com/a/4HWYt">Custom Leather Belt Rig V2.0</a>
+          </span>
+        <small class="ng-binding">by stigsd -
+            <a ng-href="http://reddit.com/r/DIY/comments/3ie4hl/custom_leather_belt_rig_v20/" target="_blank" class="ng-binding" href="http://reddit.com/r/DIY/comments/3ie4hl/custom_leather_belt_rig_v20/">44 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">255</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/vI2DA8P.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/vI2DA8P.jpg">One aspect of the Fermi Paradox is that we are surrounded by aliens and we are as aware of them in the same way ants are aware of a six lane highway.</a>
+          </span>
+        <small class="ng-binding">by lank3y -
+            <a ng-href="http://reddit.com/r/Futurology/comments/3iez6n/one_aspect_of_the_fermi_paradox_is_that_we_are/" target="_blank" class="ng-binding" href="http://reddit.com/r/Futurology/comments/3iez6n/one_aspect_of_the_fermi_paradox_is_that_we_are/">74 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4722</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3ic2ux/what_is_easier_to_get_into_than_it_is_to_get_out/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3ic2ux/what_is_easier_to_get_into_than_it_is_to_get_out/">What is easier to get into than it is to get out of?</a>
+          </span>
+        <small class="ng-binding">by Upvote_Banana -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3ic2ux/what_is_easier_to_get_into_than_it_is_to_get_out/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3ic2ux/what_is_easier_to_get_into_than_it_is_to_get_out/">8806 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">457</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/a/9HRfq" target="_blank" class="ng-binding" href="http://imgur.com/a/9HRfq">Infinity Table - First Real Project</a>
+          </span>
+        <small class="ng-binding">by blascoe -
+            <a ng-href="http://reddit.com/r/DIY/comments/3ie65k/infinity_table_first_real_project/" target="_blank" class="ng-binding" href="http://reddit.com/r/DIY/comments/3ie65k/infinity_table_first_real_project/">33 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1899</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/vWhHAgV.gifv" target="_blank" class="ng-binding" href="http://i.imgur.com/vWhHAgV.gifv">"Oh wow, I surviv....."</a>
+          </span>
+        <small class="ng-binding">by Thats_absrd -
+            <a ng-href="http://reddit.com/r/gaming/comments/3iewzr/oh_wow_i_surviv/" target="_blank" class="ng-binding" href="http://reddit.com/r/gaming/comments/3iewzr/oh_wow_i_surviv/">50 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6912</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/b8HQHmv.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/b8HQHmv.jpg">My friend couldn't find her dog anywhere. And then her neighbor called.</a>
+          </span>
+        <small class="ng-binding">by PlacentaSandwich -
+            <a ng-href="http://reddit.com/r/funny/comments/3idycz/my_friend_couldnt_find_her_dog_anywhere_and_then/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3idycz/my_friend_couldnt_find_her_dog_anywhere_and_then/">611 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">421</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/personalfinance/comments/3icvvr/seriously_what_happens_to_people_that_dont_have/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/personalfinance/comments/3icvvr/seriously_what_happens_to_people_that_dont_have/">Seriously, what happens to people that don't have retirement savings?</a>
+          </span>
+        <small class="ng-binding">by alisoncarey -
+            <a ng-href="http://reddit.com/r/personalfinance/comments/3icvvr/seriously_what_happens_to_people_that_dont_have/" target="_blank" class="ng-binding" href="http://reddit.com/r/personalfinance/comments/3icvvr/seriously_what_happens_to_people_that_dont_have/">559 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4487</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/tifu/comments/3ibx7k/tifu_by_making_a_your_mom_comeback/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/tifu/comments/3ibx7k/tifu_by_making_a_your_mom_comeback/">TIFU by making a "your mom" comeback</a>
+          </span>
+        <small class="ng-binding">by frostdragn -
+            <a ng-href="http://reddit.com/r/tifu/comments/3ibx7k/tifu_by_making_a_your_mom_comeback/" target="_blank" class="ng-binding" href="http://reddit.com/r/tifu/comments/3ibx7k/tifu_by_making_a_your_mom_comeback/">741 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3063</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/Showerthoughts/comments/3iecg1/of_all_the_bodily_functions_that_could_be/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/Showerthoughts/comments/3iecg1/of_all_the_bodily_functions_that_could_be/">Of all the bodily functions that could be contagious, thank god it's the yawn.</a>
+          </span>
+        <small class="ng-binding">by MKLV -
+            <a ng-href="http://reddit.com/r/Showerthoughts/comments/3iecg1/of_all_the_bodily_functions_that_could_be/" target="_blank" class="ng-binding" href="http://reddit.com/r/Showerthoughts/comments/3iecg1/of_all_the_bodily_functions_that_could_be/">149 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">329</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/askscience/comments/3ie9t0/why_do_automatic_reflexes_like_blinking_and/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/askscience/comments/3ie9t0/why_do_automatic_reflexes_like_blinking_and/">Why do automatic reflexes like blinking and swallowing 'pause' when you think about them? And how does this work biologically?</a>
+          </span>
+        <small class="ng-binding">by FishingCheeseMan -
+            <a ng-href="http://reddit.com/r/askscience/comments/3ie9t0/why_do_automatic_reflexes_like_blinking_and/" target="_blank" class="ng-binding" href="http://reddit.com/r/askscience/comments/3ie9t0/why_do_automatic_reflexes_like_blinking_and/">29 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5203</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/wfKabe9" target="_blank" class="ng-binding" href="http://imgur.com/wfKabe9">How to surprise a package thief.</a>
+          </span>
+        <small class="ng-binding">by KevinVortex -
+            <a ng-href="http://reddit.com/r/funny/comments/3ie7n1/how_to_surprise_a_package_thief/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3ie7n1/how_to_surprise_a_package_thief/">348 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6437</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/ImXV4IJ.gifv" target="_blank" class="ng-binding" href="http://i.imgur.com/ImXV4IJ.gifv">Last week I launched Giffiti, a simple app that let's you put GIF stickers on your photos. Would love to hear what you guys think! [iOS]</a>
+          </span>
+        <small class="ng-binding">by j1mtones -
+            <a ng-href="http://reddit.com/r/gifs/comments/3idajg/last_week_i_launched_giffiti_a_simple_app_that/" target="_blank" class="ng-binding" href="http://reddit.com/r/gifs/comments/3idajg/last_week_i_launched_giffiti_a_simple_app_that/">1977 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5418</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/i3KGTLe.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/i3KGTLe.jpg">This little girl has been with me since my first day of Kindergarten. Next month I will finish my last requirement to graduate college and she's stuck by me the entire way.</a>
+          </span>
+        <small class="ng-binding">by themolotovginger -
+            <a ng-href="http://reddit.com/r/aww/comments/3ie3td/this_little_girl_has_been_with_me_since_my_first/" target="_blank" class="ng-binding" href="http://reddit.com/r/aww/comments/3ie3td/this_little_girl_has_been_with_me_since_my_first/">280 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4598</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=60n76U2BKS4" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=60n76U2BKS4">How ice cream is made in Thailand</a>
+          </span>
+        <small class="ng-binding">by georgiaTibilisi -
+            <a ng-href="http://reddit.com/r/food/comments/3ibor3/how_ice_cream_is_made_in_thailand/" target="_blank" class="ng-binding" href="http://reddit.com/r/food/comments/3ibor3/how_ice_cream_is_made_in_thailand/">1141 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">496</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/tifu/comments/3iel4o/tifu_i_introduced_my_wife_to_reddit/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/tifu/comments/3iel4o/tifu_i_introduced_my_wife_to_reddit/">TIFU I introduced my wife to reddit</a>
+          </span>
+        <small class="ng-binding">by Rastem88 -
+            <a ng-href="http://reddit.com/r/tifu/comments/3iel4o/tifu_i_introduced_my_wife_to_reddit/" target="_blank" class="ng-binding" href="http://reddit.com/r/tifu/comments/3iel4o/tifu_i_introduced_my_wife_to_reddit/">61 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5554</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=duPynkGEFGI" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=duPynkGEFGI">Ocarina of Time (dunkview)</a>
+          </span>
+        <small class="ng-binding">by BurntNinjaToast -
+            <a ng-href="http://reddit.com/r/videos/comments/3idexv/ocarina_of_time_dunkview/" target="_blank" class="ng-binding" href="http://reddit.com/r/videos/comments/3idexv/ocarina_of_time_dunkview/">1210 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">7000</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/NeaVK1U.gifv" target="_blank" class="ng-binding" href="http://i.imgur.com/NeaVK1U.gifv">The convenience of a balcony knows no limits</a>
+          </span>
+        <small class="ng-binding">by sunbolts -
+            <a ng-href="http://reddit.com/r/gifs/comments/3id3e6/the_convenience_of_a_balcony_knows_no_limits/" target="_blank" class="ng-binding" href="http://reddit.com/r/gifs/comments/3id3e6/the_convenience_of_a_balcony_knows_no_limits/">1164 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3752</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/6NiDIbO" target="_blank" class="ng-binding" href="http://imgur.com/6NiDIbO">Irony?</a>
+          </span>
+        <small class="ng-binding">by SalmonellaSalmon -
+            <a ng-href="http://reddit.com/r/funny/comments/3iegc0/irony/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3iegc0/irony/">521 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6579</span>
+          <span class="title">
+            <a ng-href="https://en.wikipedia.org/wiki/Meow_(cat)" target="_blank" class="ng-binding" href="https://en.wikipedia.org/wiki/Meow_(cat)">TIL that the Guinness World Records stopped awarding the fattest cats or any other animal to discourage deliberate overfeeding</a>
+          </span>
+        <small class="ng-binding">by Noticemenot -
+            <a ng-href="http://reddit.com/r/todayilearned/comments/3icwzi/til_that_the_guinness_world_records_stopped/" target="_blank" class="ng-binding" href="http://reddit.com/r/todayilearned/comments/3icwzi/til_that_the_guinness_world_records_stopped/">732 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">130</span>
+          <span class="title">
+            <a ng-href="http://www.ktlaz.com/2015/08/26/smart-security-cam-will-tell-you-that-the-intruder-is-your-cat-or-a-thief/" target="_blank" class="ng-binding" href="http://www.ktlaz.com/2015/08/26/smart-security-cam-will-tell-you-that-the-intruder-is-your-cat-or-a-thief/">Smart security cam will tell you that the intruder is your cat or a thief</a>
+          </span>
+        <small class="ng-binding">by Johnleha -
+            <a ng-href="http://reddit.com/r/Futurology/comments/3iflm8/smart_security_cam_will_tell_you_that_the/" target="_blank" class="ng-binding" href="http://reddit.com/r/Futurology/comments/3iflm8/smart_security_cam_will_tell_you_that_the/">12 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">403</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3ieq4s/whats_the_most_useless_skill_you_possess/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3ieq4s/whats_the_most_useless_skill_you_possess/">What's the most useless skill you possess?</a>
+          </span>
+        <small class="ng-binding">by reader313 -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3ieq4s/whats_the_most_useless_skill_you_possess/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3ieq4s/whats_the_most_useless_skill_you_possess/">1129 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4842</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3ibku6/whats_the_craziest_black_out_drunk_experience/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3ibku6/whats_the_craziest_black_out_drunk_experience/">What's the craziest black out drunk experience you've ever been told you've done?</a>
+          </span>
+        <small class="ng-binding">by ceccai -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3ibku6/whats_the_craziest_black_out_drunk_experience/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3ibku6/whats_the_craziest_black_out_drunk_experience/">8443 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3031</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/0pt8H2O" target="_blank" class="ng-binding" href="http://imgur.com/0pt8H2O">For when things go from bad to wurst.</a>
+          </span>
+        <small class="ng-binding">by nightfyr -
+            <a ng-href="http://reddit.com/r/funny/comments/3iegio/for_when_things_go_from_bad_to_wurst/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3iegio/for_when_things_go_from_bad_to_wurst/">84 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">197</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=GP2KjNge1FY" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=GP2KjNge1FY">Grey Gardens (1975) - Following the lives of two eccentric relatives of Jacqueline Kennedy.</a>
+          </span>
+        <small class="ng-binding">by Jon-Osterman -
+            <a ng-href="http://reddit.com/r/Documentaries/comments/3idi5a/grey_gardens_1975_following_the_lives_of_two/" target="_blank" class="ng-binding" href="http://reddit.com/r/Documentaries/comments/3idi5a/grey_gardens_1975_following_the_lives_of_two/">23 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">377</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/personalfinance/comments/3icgtk/withholding_my_current_salary_may_have_cost_me_an/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/personalfinance/comments/3icgtk/withholding_my_current_salary_may_have_cost_me_an/">Withholding my current salary may have cost me an offer</a>
+          </span>
+        <small class="ng-binding">by roatit -
+            <a ng-href="http://reddit.com/r/personalfinance/comments/3icgtk/withholding_my_current_salary_may_have_cost_me_an/" target="_blank" class="ng-binding" href="http://reddit.com/r/personalfinance/comments/3icgtk/withholding_my_current_salary_may_have_cost_me_an/">516 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">203</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=d09soDoUvaw" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=d09soDoUvaw">How Mental Illness Derailed the Career of a Promising Young Skateboarder (2015) - short documentary on British skateboarder Paul Alexander</a>
+          </span>
+        <small class="ng-binding">by SCHR4DERBRAU -
+            <a ng-href="http://reddit.com/r/Documentaries/comments/3idcax/how_mental_illness_derailed_the_career_of_a/" target="_blank" class="ng-binding" href="http://reddit.com/r/Documentaries/comments/3idcax/how_mental_illness_derailed_the_career_of_a/">14 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6474</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/c9NxZbl" target="_blank" class="ng-binding" href="http://imgur.com/c9NxZbl">This is the FURY ROAD legend that George Miller wrote on flight from LA to Australia in 1997</a>
+          </span>
+        <small class="ng-binding">by tommyn95 -
+            <a ng-href="http://reddit.com/r/movies/comments/3ibfw4/this_is_the_fury_road_legend_that_george_miller/" target="_blank" class="ng-binding" href="http://reddit.com/r/movies/comments/3ibfw4/this_is_the_fury_road_legend_that_george_miller/">1468 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4308</span>
+          <span class="title">
+            <a ng-href="http://www.independent.co.uk/sport/general/athletics/pawel-fajdek-polish-champion-pays-taxi-fare-with-world-athletics-championship-hammer-gold-medal-after-getting-hammered-in-beijing-10470653.html" target="_blank" class="ng-binding" href="http://www.independent.co.uk/sport/general/athletics/pawel-fajdek-polish-champion-pays-taxi-fare-with-world-athletics-championship-hammer-gold-medal-after-getting-hammered-in-beijing-10470653.html">Drunk champion hammer thrower 'pays for taxi with gold medal after night out celebrating'</a>
+          </span>
+        <small class="ng-binding">by katafrakt -
+            <a ng-href="http://reddit.com/r/nottheonion/comments/3ibi0v/drunk_champion_hammer_thrower_pays_for_taxi_with/" target="_blank" class="ng-binding" href="http://reddit.com/r/nottheonion/comments/3ibi0v/drunk_champion_hammer_thrower_pays_for_taxi_with/">210 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1725</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/DYbBdWk.jpeg" target="_blank" class="ng-binding" href="http://i.imgur.com/DYbBdWk.jpeg">PsBattle: This kid at a Bernie rally in South Carolina</a>
+          </span>
+        <small class="ng-binding">by Fightnrndthewrld -
+            <a ng-href="http://reddit.com/r/photoshopbattles/comments/3ickqi/psbattle_this_kid_at_a_bernie_rally_in_south/" target="_blank" class="ng-binding" href="http://reddit.com/r/photoshopbattles/comments/3ickqi/psbattle_this_kid_at_a_bernie_rally_in_south/">112 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3497</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/MbjoM66" target="_blank" class="ng-binding" href="http://imgur.com/MbjoM66">Dropped a red slushie, made for a good snapchat</a>
+          </span>
+        <small class="ng-binding">by b_roasted -
+            <a ng-href="http://reddit.com/r/funny/comments/3ie011/dropped_a_red_slushie_made_for_a_good_snapchat/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3ie011/dropped_a_red_slushie_made_for_a_good_snapchat/">70 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2906</span>
+          <span class="title">
+            <a ng-href="http://youtu.be/EiY9inQKkvw" target="_blank" class="ng-binding" href="http://youtu.be/EiY9inQKkvw">Two friends attempt to release a trapped bobcat they found</a>
+          </span>
+        <small class="ng-binding">by LittleDank -
+            <a ng-href="http://reddit.com/r/videos/comments/3idoq9/two_friends_attempt_to_release_a_trapped_bobcat/" target="_blank" class="ng-binding" href="http://reddit.com/r/videos/comments/3idoq9/two_friends_attempt_to_release_a_trapped_bobcat/">629 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">1273</span>
+          <span class="title">
+            <a ng-href="http://www.theguardian.com/childrens-books-site/2015/aug/25/scandinavian-childrens-books-norway-ingelin-rossland-sex-swearing" target="_blank" class="ng-binding" href="http://www.theguardian.com/childrens-books-site/2015/aug/25/scandinavian-childrens-books-norway-ingelin-rossland-sex-swearing">Why there are no taboos in Scandinavian children's books</a>
+          </span>
+        <small class="ng-binding">by largeheartedboy -
+            <a ng-href="http://reddit.com/r/books/comments/3ibmma/why_there_are_no_taboos_in_scandinavian_childrens/" target="_blank" class="ng-binding" href="http://reddit.com/r/books/comments/3ibmma/why_there_are_no_taboos_in_scandinavian_childrens/">579 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2171</span>
+          <span class="title">
+            <a ng-href="https://www.youtube.com/watch?v=x5-JVvCrGC8" target="_blank" class="ng-binding" href="https://www.youtube.com/watch?v=x5-JVvCrGC8">Magneto is the worst villain ever.</a>
+          </span>
+        <small class="ng-binding">by Cleverly_Clearly -
+            <a ng-href="http://reddit.com/r/videos/comments/3idzv1/magneto_is_the_worst_villain_ever/" target="_blank" class="ng-binding" href="http://reddit.com/r/videos/comments/3idzv1/magneto_is_the_worst_villain_ever/">355 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">170</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/askscience/comments/3ieb4e/when_muscles_are_sore_is_their_structural/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/askscience/comments/3ieb4e/when_muscles_are_sore_is_their_structural/">When muscles are sore is their structural integrity compromised ?</a>
+          </span>
+        <small class="ng-binding">by bgb111 -
+            <a ng-href="http://reddit.com/r/askscience/comments/3ieb4e/when_muscles_are_sore_is_their_structural/" target="_blank" class="ng-binding" href="http://reddit.com/r/askscience/comments/3ieb4e/when_muscles_are_sore_is_their_structural/">18 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6486</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/DDXWwro.gifv" target="_blank" class="ng-binding" href="http://i.imgur.com/DDXWwro.gifv">Let us in Jerry, it's me Mittens.</a>
+          </span>
+        <small class="ng-binding">by SAFE4WORKS -
+            <a ng-href="http://reddit.com/r/aww/comments/3id3ia/let_us_in_jerry_its_me_mittens/" target="_blank" class="ng-binding" href="http://reddit.com/r/aww/comments/3id3ia/let_us_in_jerry_its_me_mittens/">286 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6075</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/dKeVLeO.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/dKeVLeO.jpg">For real, though</a>
+          </span>
+        <small class="ng-binding">by BabyMcHaggis -
+            <a ng-href="http://reddit.com/r/funny/comments/3id4xh/for_real_though/" target="_blank" class="ng-binding" href="http://reddit.com/r/funny/comments/3id4xh/for_real_though/">98 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">100</span>
+          <span class="title">
+            <a ng-href="https://youtu.be/vFs_Yxd0PgE" target="_blank" class="ng-binding" href="https://youtu.be/vFs_Yxd0PgE">Dream Deceivers (1992) Two Nevada teens who decided to shoot themselves in the head with a shotgun and the ensuing civil court case staged to place the blame on the heavy metal combo Judas Priest.</a>
+          </span>
+        <small class="ng-binding">by uneek_alex -
+            <a ng-href="http://reddit.com/r/Documentaries/comments/3idzqm/dream_deceivers_1992_two_nevada_teens_who_decided/" target="_blank" class="ng-binding" href="http://reddit.com/r/Documentaries/comments/3idzqm/dream_deceivers_1992_two_nevada_teens_who_decided/">16 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">744</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3idfsw/what_is_the_best_thing_youve_ever_seen_on_the/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3idfsw/what_is_the_best_thing_youve_ever_seen_on_the/">What is the best thing you've ever seen on the internet?</a>
+          </span>
+        <small class="ng-binding">by itsacquaintance -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3idfsw/what_is_the_best_thing_youve_ever_seen_on_the/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3idfsw/what_is_the_best_thing_youve_ever_seen_on_the/">509 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">4040</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/jKauluS" target="_blank" class="ng-binding" href="http://imgur.com/jKauluS">Tom Cruise, Emilio Estevez, C. Thomas Howell, Patrick Swayze, Ralph Macchio, Rob Lowe, and Matt Dillon. 1983</a>
+          </span>
+        <small class="ng-binding">by smashley951 -
+            <a ng-href="http://reddit.com/r/pics/comments/3ieblz/tom_cruise_emilio_estevez_c_thomas_howell_patrick/" target="_blank" class="ng-binding" href="http://reddit.com/r/pics/comments/3ieblz/tom_cruise_emilio_estevez_c_thomas_howell_patrick/">400 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">5230</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/tsKCJwz.gifv" target="_blank" class="ng-binding" href="http://i.imgur.com/tsKCJwz.gifv">Nice try, Kirby</a>
+          </span>
+        <small class="ng-binding">by CANT_TRUST_HILLARY -
+            <a ng-href="http://reddit.com/r/gaming/comments/3ickc8/nice_try_kirby/" target="_blank" class="ng-binding" href="http://reddit.com/r/gaming/comments/3ickc8/nice_try_kirby/">167 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2838</span>
+          <span class="title">
+            <a ng-href="http://m.imgur.com/a/DlAVV" target="_blank" class="ng-binding" href="http://m.imgur.com/a/DlAVV">Letter a friend of mine's daughter received from school today. Her Wonder Woman lunchbox features a violent super hero that does not comply with the school's dress code. Pictures of the lunchbox are also attached.</a>
+          </span>
+        <small class="ng-binding">by twines18 -
+            <a ng-href="http://reddit.com/r/pics/comments/3ieqdl/letter_a_friend_of_mines_daughter_received_from/" target="_blank" class="ng-binding" href="http://reddit.com/r/pics/comments/3ieqdl/letter_a_friend_of_mines_daughter_received_from/">468 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">6329</span>
+          <span class="title">
+            <a ng-href="http://www.upi.com/Odd_News/2010/08/09/Father-son-face-off-at-Scrabble/72561281377594/" target="_blank" class="ng-binding" href="http://www.upi.com/Odd_News/2010/08/09/Father-son-face-off-at-Scrabble/72561281377594/">TIL that a father and son were matched against each other in the National Scrabble Championship. The father won by playing "DEFEATED" as his last word.</a>
+          </span>
+        <small class="ng-binding">by ValkornDoA -
+            <a ng-href="http://reddit.com/r/todayilearned/comments/3icd6x/til_that_a_father_and_son_were_matched_against/" target="_blank" class="ng-binding" href="http://reddit.com/r/todayilearned/comments/3icd6x/til_that_a_father_and_son_were_matched_against/">277 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2046</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3ibz75/serious_hey_reddit_how_do_you_inspire_yourself_to/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3ibz75/serious_hey_reddit_how_do_you_inspire_yourself_to/">[Serious] Hey Reddit, how do you inspire yourself to get up, do your best, and stay positive every day?</a>
+          </span>
+        <small class="ng-binding">by Ghostfenrir1 -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3ibz75/serious_hey_reddit_how_do_you_inspire_yourself_to/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3ibz75/serious_hey_reddit_how_do_you_inspire_yourself_to/">1262 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">172</span>
+          <span class="title">
+            <a ng-href="http://fortune.com/2015/08/25/grow-metal-like-a-tree/" target="_blank" class="ng-binding" href="http://fortune.com/2015/08/25/grow-metal-like-a-tree/">This startup can grow metal like a tree using nanotechnology, and it's about to hit the big time.</a>
+          </span>
+        <small class="ng-binding">by JKentMessum_ -
+            <a ng-href="http://reddit.com/r/Futurology/comments/3ie9xf/this_startup_can_grow_metal_like_a_tree_using/" target="_blank" class="ng-binding" href="http://reddit.com/r/Futurology/comments/3ie9xf/this_startup_can_grow_metal_like_a_tree_using/">11 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">184</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3if1b6/the_last_meal_you_ate_is_the_only_thing_you_can/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3if1b6/the_last_meal_you_ate_is_the_only_thing_you_can/">The last meal you ate is the only thing you can eat for the rest of your life. How fucked are you?</a>
+          </span>
+        <small class="ng-binding">by Agastrophus -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3if1b6/the_last_meal_you_ate_is_the_only_thing_you_can/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3if1b6/the_last_meal_you_ate_is_the_only_thing_you_can/">845 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">80</span>
+          <span class="title">
+            <a ng-href="http://www.washingtonpost.com/news/wonkblog/wp/2015/08/11/the-absurdity-of-womens-clothing-sizes-in-one-chart/" target="_blank" class="ng-binding" href="http://www.washingtonpost.com/news/wonkblog/wp/2015/08/11/the-absurdity-of-womens-clothing-sizes-in-one-chart/">The absurdity of women’s clothing sizes, in one chart</a>
+          </span>
+        <small class="ng-binding">by IndustrialTrust -
+            <a ng-href="http://reddit.com/r/dataisbeautiful/comments/3iemwb/the_absurdity_of_womens_clothing_sizes_in_one/" target="_blank" class="ng-binding" href="http://reddit.com/r/dataisbeautiful/comments/3iemwb/the_absurdity_of_womens_clothing_sizes_in_one/">21 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2397</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/qCBHb1g" target="_blank" class="ng-binding" href="http://imgur.com/qCBHb1g">Contemplating life.</a>
+          </span>
+        <small class="ng-binding">by LouisvilleXV -
+            <a ng-href="http://reddit.com/r/aww/comments/3ie740/contemplating_life/" target="_blank" class="ng-binding" href="http://reddit.com/r/aww/comments/3ie740/contemplating_life/">39 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3234</span>
+          <span class="title">
+            <a ng-href="http://www.reddit.com/r/AskReddit/comments/3ibigd/reddit_what_are_you_looking_forward_to/" target="_blank" class="ng-binding" href="http://www.reddit.com/r/AskReddit/comments/3ibigd/reddit_what_are_you_looking_forward_to/">Reddit, what are you looking forward to?</a>
+          </span>
+        <small class="ng-binding">by pockyhair -
+            <a ng-href="http://reddit.com/r/AskReddit/comments/3ibigd/reddit_what_are_you_looking_forward_to/" target="_blank" class="ng-binding" href="http://reddit.com/r/AskReddit/comments/3ibigd/reddit_what_are_you_looking_forward_to/">6970 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">2423</span>
+          <span class="title">
+            <a ng-href="http://imgur.com/LuCuDNz" target="_blank" class="ng-binding" href="http://imgur.com/LuCuDNz">I'm the guy who proposed with the ring around a puppy's collar a couple years ago. Some of you asked for an update picture, here we are on our anniversary yesterday. They took our bench.</a>
+          </span>
+        <small class="ng-binding">by EdithMcrotch -
+            <a ng-href="http://reddit.com/r/aww/comments/3ie5vg/im_the_guy_who_proposed_with_the_ring_around_a/" target="_blank" class="ng-binding" href="http://reddit.com/r/aww/comments/3ie5vg/im_the_guy_who_proposed_with_the_ring_around_a/">65 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items --><div class="data-item ng-scope" ng-repeat="item in reddit.items">
+        <span class="score ng-binding">3342</span>
+          <span class="title">
+            <a ng-href="http://i.imgur.com/X9ABodO.jpg" target="_blank" class="ng-binding" href="http://i.imgur.com/X9ABodO.jpg">My friend's boyfriend posted this on facebook. She's in UK, he's in Brazil.</a>
+          </span>
+        <small class="ng-binding">by Jota914 -
+            <a ng-href="http://reddit.com/r/pics/comments/3iedxd/my_friends_boyfriend_posted_this_on_facebook_shes/" target="_blank" class="ng-binding" href="http://reddit.com/r/pics/comments/3iedxd/my_friends_boyfriend_posted_this_on_facebook_shes/">106 comments</a>
+        </small>
+        <div style="clear:both;"></div>
+    </div><!-- end ngRepeat: item in reddit.items -->
+        <div ng-show="reddit.busy" class="ng-hide"><img src="../images/loading.gif" data-bd-imgshare-binded="1">Loading data...</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /*250*200，创建于2013-4-13 悬浮视窗 右下角*/
+    var cpro_id = "u1260310";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1260310_0"></div><div id="cproIframe2004holder" style="box-sizing: content-box; padding: 0px; display: block; visibility: visible; border: none; float: none; overflow: hidden; position: fixed; z-index: 2147483647; width: 260px; height: 235px; right: 7px; bottom: 0px; background: none;"><div id="cproIframe2004CloseBtnWrap" style="box-sizing: content-box; position: absolute; top: 0px; left: 199px; cursor: pointer; width: 61px; height: 20px; z-index: 100; opacity: 0; margin: 0px; background-color: rgb(153, 153, 153);"></div><div id="cproIframe2004CloseBtn" style="box-sizing: content-box; position: absolute; width: 61px; height: 20px; top: 0px; left: 199px; margin: 0px 0px 5px; padding: 0px; cursor: pointer; overflow: hidden;"><div style="box-sizing: content-box;width:40px;height:20px;background-color:#999999;color:#fff;float:left;margin-right:1px;font-size:12px;font-family:微软雅黑;text-align: center;line-height:20px;">关闭</div><a style="maring:0;padding:0;display:inline-block;border:none;overflow:hidden;height:20px;line-height:20px;cursor:pointer;width:20px;background:url('http://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.1/xuanfu_close.png') no-repeat 0 0;margin-bottom:3px;float:left"></a></div><div style="box-sizing: content-box; width: 250px; height: 200px; overflow: hidden; position: absolute; left: 0px; top: 25px; padding: 4px; border: 1px solid rgb(172, 172, 172);"><div style="display:none">-</div><iframe id="cproIframe2004" src="http://pos.baidu.com/acom?adn=1&amp;at=6&amp;aurl=http%3A%2F%2Fwww.kuabaobao.com&amp;cad=0&amp;ccd=24&amp;ccw=950&amp;cec=UTF-8&amp;cfv=18&amp;ch=0&amp;col=zh-CN&amp;conOP=0&amp;cpa=1&amp;ct=1&amp;dai=2&amp;dis=0&amp;fa=3&amp;flw=1&amp;ls=3&amp;ltr=https%3A%2F%2Fwww.google.com.hk%2F&amp;ltu=http%3A%2F%2Fcamnpr.com%2FTuiJianTools%2Fjsdemo%2FngInfiniteScroll_demo_async.html&amp;lunum=6&amp;n=57089067_cpr&amp;pcs=1366x642&amp;pis=10000x10000&amp;ps=303x8&amp;psr=1366x768&amp;pss=1366x311&amp;pt=1&amp;qn=976c17003378439c&amp;rad=&amp;rsi0=250&amp;rsi1=200&amp;rsi5=4&amp;rsi6=-1&amp;rsi7=0&amp;rss0=&amp;rss1=&amp;rss2=&amp;rss3=&amp;rss4=&amp;rss5=&amp;rss6=&amp;rss7=&amp;scale=&amp;skin=&amp;td_id=1260310&amp;tn=template_float_all_normal&amp;tpr=1440573364171&amp;ts=1&amp;ww=0&amp;xuanting=0&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dc=2&amp;di=u1260310&amp;distp=2004&amp;ti=%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%88%86%E9%A1%B5-%E6%97%A0%E9%99%90%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE-AngularJS&amp;tt=1440573364151.313.502.506&amp;adclass=1&amp;conW=250&amp;conH=200" width="250" height="200" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div></div><script charset="utf-8" src="http://pos.baidu.com/acom?di=u1260310&amp;dcb=BAIDU_DUP2_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=2&amp;dds=&amp;drs=1&amp;dvi=1440492674&amp;ltu=http%3A%2F%2Fcamnpr.com%2FTuiJianTools%2Fjsdemo%2FngInfiniteScroll_demo_async.html&amp;liu=&amp;ltr=https%3A%2F%2Fwww.google.com.hk%2F&amp;lcr=&amp;ps=303x8&amp;psr=1366x768&amp;par=1366x728&amp;pcs=1366x642&amp;pss=1366x311&amp;pis=-1x-1&amp;cfv=18&amp;ccd=24&amp;chi=1&amp;cja=true&amp;cpl=5&amp;cmi=7&amp;cce=true&amp;col=zh-CN&amp;cec=UTF-8&amp;cdo=-1&amp;tsr=304&amp;tlm=1414494534&amp;tcn=1440573364&amp;tpr=1440573364171&amp;dpt=none&amp;coa=&amp;dpr=1&amp;ti=%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%88%86%E9%A1%B5-%E6%97%A0%E9%99%90%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE-AngularJS&amp;baidu_id="></script>
+<div style="display:none">
+    <script type="text/javascript" src="http://camnpr.com/SCRIPT/tongji.js"></script><script type="text/javascript" src="http://js.tongji.linezing.com/2034617/tongji.js"></script><img src="http://dt.tongji.linezing.com/tongji.do?unit_id=2034617&amp;uv_id=7136115672200249562&amp;uv_new=1&amp;cna=&amp;cg=&amp;mid=&amp;mmland=&amp;ade=&amp;adtm=&amp;sttm=&amp;cpa=&amp;ss_id=1717832865&amp;ss_no=0&amp;ec=1&amp;ref=https%3A//www.google.com.hk/&amp;url=http%3A//camnpr.com/TuiJianTools/jsdemo/ngInfiniteScroll_demo_async.html&amp;title=%u81EA%u52A8%u52A0%u8F7D%u5206%u9875-%u65E0%u9650%u52A0%u8F7D%u6570%u636E-AngularJS&amp;charset=UTF-8&amp;domain=camnpr.com&amp;hashval=1006&amp;filtered=0&amp;app=Netscape&amp;agent=Mozilla/5.0%20%28Windows%20NT%206.1%3B%20WOW64%29%20AppleWebKit/537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome/44.0.2403.155%20Safari/537.36&amp;color=24-bit&amp;screen=1366x768&amp;lg=zh-cn&amp;je=1&amp;fv=18.0%20r0&amp;st=1435548298&amp;vc=82e3aa06&amp;ut=0&amp;url_id=0&amp;cnu=0.015104080783203244" border="0" width="1" height="1" data-bd-imgshare-binded="1"><a href="http://tongji.linezing.com/report.html?unit_id=2034617" target="_blank">LinezingStat</a><script src="http://s95.cnzz.com/z_stat.php?id=1254073860&amp;web_id=1254073860" language="JavaScript"></script><script src="http://c.cnzz.com/core.php?web_id=1254073860&amp;t=z" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=1254073860" target="_blank" title="站长统计">站长统计</a>
+</div><a href="http://camnpr.com/TuiJianTools/" style="position:absolute;top:0;left:0;text-decoration:none;font-weight:bold;color:red;">☆返回『小应用』首页☆</a>
+
+
+<div id="bdimgshare_1440573365666" class="sr-bdimgshare sr-bdimgshare-list sr-bdimgshare-16 sr-bdimgshare-black" style="height:36px;line-height:26px;font-size:12px;width:autopx;display:none;" data-bd-bind="1440573365666"><div class="bdimgshare-bg"></div><div class="bdimgshare-content bdsharebuttonbox bdshare-button-style0-16"><label class="bdimgshare-lbl">分享到：</label><a href="#" onclick="return false;" class="bds_qzone" data-cmd="qzone" hidefocus=""></a><a href="#" onclick="return false;" class="bds_tsina" data-cmd="tsina" hidefocus=""></a><a href="#" onclick="return false;" class="bds_tqq" data-cmd="tqq" hidefocus=""></a><a href="#" onclick="return false;" class="bds_renren" data-cmd="renren" hidefocus=""></a><a href="#" onclick="return false;" class="bds_t163" data-cmd="t163" hidefocus=""></a><a href="#" onclick="return false;" class="bds_more" data-cmd="more" hidefocus=""></a></div></div></body></html>

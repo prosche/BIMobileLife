@@ -1,0 +1,98 @@
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<
+<div style="height:400px">111</div>
+<div id="main" style="height:800px"></div>
+<!-- ECharts单文件引入 -->
+<script type="text/javascript">
+
+    require.config({
+        paths: {
+            'echarts': './vender/echarts'
+        }
+    });
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar'
+            ],
+            function(ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+                var option = {
+                    title : {
+                        text: '近三月计费流量',
+                        textStyle:{
+                            fontSize: 10,
+                            fontWeight: 'bolder',
+                            color: '#184DE7'
+                        }
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['计费流量M']
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data: ['2015年3月', '2015年4月', '2015年5月']
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type: 'category',
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name: '计费流量M',
+                            type: 'bar',
+                            stack: '总量',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true,
+                                        position: 'insideRight'
+                                    },
+                                    color:'#16A2A9' //图例颜色设置
+                                }
+                            },
+                            data: [3310, 5500, 4892.4],
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+    );
+</script>

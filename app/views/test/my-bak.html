@@ -1,0 +1,81 @@
+<!--<p style="text-align: center;font-size: 0.9rem;margin-top: 3%; height: 10%">查询时间:<time>2015年6月13日 09:38:21</time></p>-->
+<p class="" style="text-align:center;font-size: 0.75rem;padding: 0.5rem 0;">查询时间<time>{{myDataModel.nowTime}}</time></p>
+<div class="balance noneMargin">
+	<h3>语音套餐使用情况</h3>
+	<div class="info-box">
+		<div id="charts6"  class="char" ></div>
+		<div class="text">
+			<p>本月通话总时长<i>{{myDataModel.taskAmount}}</i>分钟</p>
+			<p>已用<i>{{myDataModel.taskUsed}}</i>分钟   剩余<i>{{myDataModel.taskLast}}</i>分钟</p>
+		</div>
+	</div>
+	<div class="recommend">
+		<h2 class="title">
+			<img class="iczan" src="images/good.png"><span>为您推荐</span>
+		</h2>
+		<p class="content"><span class="left" ng-model="myDataModel.callOffer" >{{myDataModel.callOffer}}</span><button class="right btn" ng-click="myDataModel.clickOffer('1',myDataModel.callOffer)">立即订购</button><div class="clear"></div></p>
+
+	</div>
+</div>
+<!--语音明细-->
+<div class="balance noneMargin Voice-Detail">
+	<h3>语音套餐明细</h3>
+	<div class="bar-info" style="" ng-repeat="taskDetailList in myDataModel.taskDetailLists">
+		<div class="">
+			<p>{{taskDetailList.subject}}</p>
+			<div class="bar-outer">
+				<div class="bar-inner bgcolor-orange"  style="width:{{taskDetailList.usedRate}}%"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--流量套餐-->
+<div class="balance">
+	<h3>流量套餐使用情况</h3>
+	<div class="info-box">
+		<div id="charts7" class="char"></div>
+		<div class="text">
+			<p>本月总流量<i>{{myDataModel.flowAmount}}</i>M</p>
+			<p>已用<i>{{myDataModel.flowUsed}}</i>M  剩余<i>{{myDataModel.flowLast}}</i>M</p>
+		</div>
+	</div>
+	<div class="recommend">
+		<h2 class="title">
+			<img class="iczan" src="images/good.png"><span>为您推荐</span>
+		</h2>
+		<p class="content"><span class="left" ng-model="myDataModel.gprsOffer" >{{myDataModel.gprsOffer}}</span><button class="right btn" ng-click="myDataModel.clickOffer('2',myDataModel.gprsOffer)">立即订购</button><div class="clear"></div></p>
+
+	</div>
+</div>
+<!--流量明细-->
+<div class="balance noneMargin traffic-Detail">
+	<h3>流量套餐明细</h3>
+	<div class="bar-info" style=""  ng-repeat="flowDetailList in myDataModel.flowDetailLists">
+		<div class="">
+			<p>{{flowDetailList.subject}}</p>
+			<div class="bar-outer">
+				<div class="bar-inner bgcolor-orange"  style="width:{{flowDetailList.usedRate}}%"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--剩余流量-->
+<div class="balance surplus-Detail">
+	<h3>剩余流量我可以做什么</h3>
+	<p class="traffic-do">
+		<img class="icon" src="images/computer.png">
+		<span class="text">您可以浏览网页约 <i>{{myDataModel.computerflows}}</i> 小时</span>
+	</p>
+	<p class="traffic-do">
+		<img class="icon" src="images/music.png">
+		<span class="text">您可以在线听歌约 <i>{{myDataModel.musicflows}}</i> 小时</span>
+	</p>
+	<p class="traffic-do">
+		<img class="icon" src="images/wechat.png" >
+		<span class="text">您可以在线聊天 <i>{{myDataModel.wechatflows}}</i> 小时</span>
+	</p>
+	<p class="traffic-do">
+		<img class="icon" src="images/read.png" >
+		<span class="text">您可以在线阅读 <i>{{myDataModel.readflows}}</i> 小时</span>
+	</p>
+</div>

@@ -1,0 +1,36 @@
+<div id="loading" class="popWindow"></div>
+<!-- 头部开始 -->
+<header class="header">
+	<div class="h_label">登录</div>
+</header>
+<!-- 头部结束 -->
+<section class="content" >
+	<!-- 登录开始 -->
+	<form name="loginForm" novalidate>
+		<section class="main">
+			<div class="inp user bg">
+				<span class="icon"></span>
+			<span class="input">
+				<input name="loginName" type="number"   ng-class="{'has-error':loginForm.$submitted&&loginForm.loginName.$invalid}" ng-minlength="11" ng-maxlength="11" ng-model="loginModel.loginName" placeholder="请输入手机号码" required/></span>
+
+				<span class="more"></span>
+				<span class="clear"></span>
+			</div>
+			<div class="alert alert-danger" style="font-family:courier; font-size:80%;text-align: center" ng-show="loginForm.$submitted&&loginForm.loginName.$invalid">请输入正确手机号</div>
+			<ul class="detail"></ul>
+			<div class="pw_contain" style="display: block;">
+				<div class="inp graphics short small bg">
+					<span class="icon"></span>
+					<span class="input"><input class="identify_code"  name="passwd" ng-class="{'has-error':loginForm.$submitted&&loginForm.passwd.$invalid}" ng-model="loginModel.passwd" type="text" placeholder="验证码" required></span>
+					<span class="clear" style="display: none;"></span>
+				</div>
+				<div class="identify">
+					<button class="refresh" ng-disabled="loginForm.loginName.$invalid" ng-click="loginModel.getPasswd()" ng-style="loginModel.passwdStyle">{{loginModel.getReal}}</button>
+				</div>
+			</div>
+			<div class="alert alert-danger" style="font-family:courier; font-size:80%;text-align: center" ng-show="loginForm.$submitted&&loginForm.$valid">{{loginModel.errorMsg}}</div>
+			<button class="btn" type="submit" ng-disabled="loginForm.$invalid" ng-show="loginModel.login" ng-click="loginModel.onclick()">登录</button>
+			</section>
+	</form>
+	<!-- 登录结束 -->
+</section>

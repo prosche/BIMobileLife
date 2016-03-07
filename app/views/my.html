@@ -1,0 +1,241 @@
+<!-- 头部开始 -->
+<header class="header">
+	<a href="javascript:void(0);" class="back goback" onclick="return false;">返回</a>
+	<div class="h_label">我的</div>
+</header>
+<!-- 头部结束 -->
+<section id="my_wrapper" class="">
+
+	<section id="tabs" class="tabWrapper">
+		<!--头像及文字信息-->
+		<div class="info">
+			<img class="headImg" src="images/headImg.png" />
+			<div class="text">
+				<p>手机号码：{{myDataModel.billId}}</p>
+				<p>话费余额：<i>{{myDataModel.balance}}</i>元</p>
+				<p>流量剩余：<i>{{myDataModel.flows}}</i>M</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!--tab切换-->
+		<div class="tabContent">
+			<!--tab 标签-->
+			<UL id=tags>
+				<LI class="selectTag">
+					<A onClick="selectTag('tagContent0',this)" href="javascript:void(0)">我的大数据</A> </LI>
+				<LI>
+					<A onClick="selectTag('tagContent1',this)" href="javascript:void(0)">我的余额</A> </LI>
+				<!--<LI>
+					<A onClick="selectTag('tagContent2',this)" href="javascript:void(0)">定制推荐</A> </LI>-->
+			</UL>
+			<!--tab 容器-->
+			<DIV id="tagContent" >
+				<DIV class="tagContent selectTag" id="tagContent0" >
+					<div class="data">
+						<img src="images/{{myDataModel.headPhoto}}" />
+						<div class="text">
+							<p>综合近三个月表现</p>
+							<p>您不愧为<i>"{{myDataModel.userType}}"</i>
+							</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="nearMonthWrapper">
+						<h3>{{myDataModel.charts1Title}}</h3>
+						<div class="echarContent" style="min-height: 280px">
+							<div id="charts1" style="min-height: 280px">
+							</div>
+						</div>
+					</div>
+					<div class="nearMonthWrapper">
+						<h3>{{myDataModel.charts2Title}}</h3>
+						<div class="echarContent" style="min-height: 280px">
+							<div id="charts2" style="min-height: 280px">
+							</div>
+						</div>
+					</div>
+					<div class="nearMonthWrapper">
+						<h3>我的通讯生活</h3>
+						<p>您{{myDataModel.month}}月一共发了<i>{{myDataModel.smsCounts}}</i>条短/彩信</p>
+						<p>您{{myDataModel.month}}月拨打电话<i>{{myDataModel.callOutDuration}}</i>分钟</p>
+						<p>您{{myDataModel.month}}月接听电话<i>{{myDataModel.callInDuration}}</i>分钟</p>
+						<p>您{{myDataModel.month}}月平均每天拨打<i>{{myDataModel.callAvgDayDuration}}</i>分钟</p>
+						<div class="echarContent left" style="height: 150px">
+							<div id="charts4" style="height: 150px">
+							</div>
+						</div>
+						<div class="echarContent right" style="height: 150px">
+							<div style="margin-left: 30%;margin-top:10%;height: 1px">被叫{{myDataModel.callInScale}}%</div>
+							<canvas id="userCall" style="width:20px;margin-left: 45%;margin-right: 45%;margin-top:20%;height: 90px"></canvas>
+							<div style="margin-left: 30%;">主叫{{myDataModel.callOutScale}}%</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="nearMonthWrapper">
+						<h3>话费去哪了(近三月话费分析情况)</h3>
+						<div class="echarContent" style="min-height: 280px">
+							<div id="charts3" style="min-height: 280px">
+							</div>
+						</div>
+					</div>
+					<div class="nearMonthWrapper">
+						<h3>我的圈子构成</h3>
+						<div class="echarContent" style="min-height: 250px">
+							<div id="charts5" style="min-height: 250px">
+							</div>
+						</div>
+						<div class="echarContent" style="min-height: 250px">
+							<div id="charts8" style="min-height: 250px">
+							</div>
+						</div>
+					</div>
+				</DIV>
+				<DIV class="tagContent" id="tagContent1">
+					<p class="" style="text-align:center;font-size: 0.75rem;padding: 0.5rem 0;">查询时间<time>{{myDataModel.nowTime}}</time></p>
+					<div class="balance noneMargin">
+						<h3>语音套餐使用情况</h3>
+						<div class="info-box">
+							<div id="charts6"  class="char" ></div>
+							<div class="text">
+								<p>本月套餐包含总时长<i>{{myDataModel.taskAmount}}</i>分钟</p>
+								<p>已用<i>{{myDataModel.taskUsed}}</i>分钟   剩余<i>{{myDataModel.taskLast}}</i>分钟</p>
+							</div>
+						</div>
+						<div class="recommend">
+							<h2 class="title">
+								<img class="iczan" src="images/good.png"><span>为您推荐</span>
+							</h2>
+							<p class="content"><span class="left" ng-model="myDataModel.callOffer" >{{myDataModel.callOffer}}</span><button class="right btn" ng-click="myDataModel.clickOffer('1',myDataModel.callOffer)">立即订购</button><div class="clear"></div></p>
+
+						</div>
+					</div>
+					<!--语音明细-->
+					<div class="balance noneMargin Voice-Detail">
+						<h3>语音套餐明细</h3>
+						<div class="bar-info" style="" ng-repeat="taskDetailList in myDataModel.taskDetailLists">
+							<div class="">
+								<p>{{taskDetailList.subject}}</p>
+								<div class="bar-outer">
+									<div class="bar-inner bgcolor-orange"  style="width:{{taskDetailList.usedRate}}%"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--流量套餐-->
+					<div class="balance">
+						<h3>流量套餐使用情况</h3>
+						<div class="info-box">
+							<div id="charts7" class="char"></div>
+							<div class="text">
+								<p>本月套餐包含总流量<i>{{myDataModel.flowAmount}}</i>M</p>
+								<p>已用<i>{{myDataModel.flowUsed}}</i>M  剩余<i>{{myDataModel.flowLast}}</i>M</p>
+							</div>
+						</div>
+						<div class="recommend">
+							<h2 class="title">
+								<img class="iczan" src="images/good.png"><span>为您推荐</span>
+							</h2>
+							<p class="content"><span class="left" ng-model="myDataModel.gprsOffer" >{{myDataModel.gprsOffer}}</span><button class="right btn" ng-click="myDataModel.clickOffer('2',myDataModel.gprsOffer)">立即订购</button><div class="clear"></div></p>
+
+						</div>
+					</div>
+					<!--流量明细-->
+					<div class="balance noneMargin traffic-Detail">
+						<h3>流量套餐明细</h3>
+						<div class="bar-info" style=""  ng-repeat="flowDetailList in myDataModel.flowDetailLists">
+							<div class="">
+								<p>{{flowDetailList.subject}}</p>
+								<div class="bar-outer">
+									<div class="bar-inner bgcolor-purple"  style="width:{{flowDetailList.usedRate}}%"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--剩余流量-->
+					<div class="balance surplus-Detail">
+						<h3>剩余流量我可以做什么</h3>
+						<p class="traffic-do">
+							<img class="icon" src="images/computer.png">
+							<span class="text">您可以浏览网页约 <i>{{myDataModel.computerflows}}</i> 小时</span>
+						</p>
+						<p class="traffic-do">
+							<img class="icon" src="images/music.png">
+							<span class="text">您可以在线听歌约 <i>{{myDataModel.musicflows}}</i> 小时</span>
+						</p>
+						<p class="traffic-do">
+							<img class="icon" src="images/wechat.png" >
+							<span class="text">您可以在线聊天 <i>{{myDataModel.wechatflows}}</i> 小时</span>
+						</p>
+						<p class="traffic-do">
+							<img class="icon" src="images/read.png" >
+							<span class="text">您可以在线阅读 <i>{{myDataModel.readflows}}</i> 小时</span>
+						</p>
+					</div>
+					</DIV>
+				<!--<DIV class="tagContent" id="tagContent2">请期待更加精彩内容</DIV>-->
+			</DIV>
+		</div>
+	</section>
+</section>
+<!--<footer id="dvfoot">
+	<ul>
+		&lt;!&ndash;<li>
+			<a href="##">
+				<img src="images/f_home.png">
+			</a>
+		</li>
+		<li>
+			<a class="focus" href="##">
+				<img src="images/f_my.png">
+			</a>
+		</li>
+		<li>
+			<a href="##">
+				<img src="images/f_find.png">
+			</a>
+		</li>
+		<li>
+			<a href="##">
+				<img src="images/f_life.png">
+			</a>
+		</li>&ndash;&gt;
+	</ul>
+</footer>-->
+<script type="text/ng-template" id="firstDialogId">
+	<div class="ngdialog-message">
+		<div class="innerContent">
+			{{theme}}
+		</div>
+		<!--<div ng-show="false" id="offerId" name="offerId">{{offer}}</div>-->
+	</div>
+	<div class="ngdialog-buttons">
+		<button type="button" class="ngdialog-button ngdialog-button-secondary"
+				ng-dialog="secondDialogId"
+				ng-dialog-class="ngdialog-theme-default"
+				ng-dialog-controller="SecondModalCtrl"
+				ng-dialog-close-previous
+				style="position:absolute;left: 2%;padding:4% 15%;display: block;background: #adadad;color: #fff;font-size: .85rem;">取消</button>
+		<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()" style="position:absolute;padding:4% 15%;display: block;background: #ffb400;color: #fff;font-size: .85rem;box-sizing: border-box;right: 5%">确认</button>
+	</div>
+</script>
+
+
+<script type="text/javascript">
+	function selectTag(showContent, selfObj)
+	{
+		// 操作标签
+		var tag = document.getElementById("tags").getElementsByTagName("li");
+		var taglength = tag.length;
+		for (i = 0; i < taglength; i++)
+		{
+			tag[i].className = "";
+		}
+		selfObj.parentNode.className = "selectTag";
+		// 操作内容
+		for (i = 0; j = document.getElementById("tagContent" + i); i++)
+		{
+			j.style.display = "none";
+		}
+		document.getElementById(showContent).style.display = "block";
+	}
+</script>
